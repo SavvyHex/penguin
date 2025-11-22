@@ -2,7 +2,7 @@
 
 {
   # Hostname
-  networking.hostName = "deathstar";
+  networking.hostName = "penguin";
 
   # Network management
   networking.networkmanager.enable = true;
