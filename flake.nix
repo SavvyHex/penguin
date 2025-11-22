@@ -7,7 +7,7 @@
 
   outputs = { self, nixpkgs }: {
 
-    nixosConfigurations.deathstar = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.penguin = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./hardware-configuration.nix
