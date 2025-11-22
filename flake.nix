@@ -7,6 +7,14 @@
 
   outputs = { self, nixpkgs }: {
 
+    nixosConfigurations.deathstar = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./hardware-configuration.nix
+        ./configuration.nix
+      ];
+    };
+
     packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
 
     packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
