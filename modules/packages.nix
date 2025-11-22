@@ -8,6 +8,7 @@
     brave
     vscode
     git
+    nodejs
   ];
 
   # Programs that need special configuration
