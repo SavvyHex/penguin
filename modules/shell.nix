@@ -11,6 +11,10 @@
       alias l='ls -CF'
       alias cd..='cd ..'
       alias ..='cd ..'
+      
+      # System management
+      alias rebuild='sudo nixos-rebuild switch --flake ~/.config/nixos#penguin'
+      alias rebuild-test='nixos-rebuild build --flake ~/.config/nixos#penguin'
     '';
   };
 
