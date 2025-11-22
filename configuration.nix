@@ -11,6 +11,7 @@
     # Modular configuration
     ./modules/boot.nix
     ./modules/desktop.nix
+    ./modules/docker.nix
     ./modules/localization.nix
     ./modules/networking.nix
     ./modules/nix.nix
