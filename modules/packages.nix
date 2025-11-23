@@ -9,7 +9,7 @@
     vscode
     git
     nodejs
-    ulauncher
+    spotify
   ];
 
   # Programs that need special configuration
