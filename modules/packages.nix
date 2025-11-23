@@ -10,6 +10,7 @@
     git
     nodejs
     spotify
+    python
   ];
 
   # Programs that need special configuration
