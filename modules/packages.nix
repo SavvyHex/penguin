@@ -9,6 +9,7 @@
     vscode
     git
     nodejs
+    ulauncher
   ];
 
   # Programs that need special configuration
