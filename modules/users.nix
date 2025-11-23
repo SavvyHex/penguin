@@ -5,7 +5,7 @@
   users.users.savvyhex = {
     isNormalUser = true;
     description = "Saketh Pai";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       kdePackages.kate
     ];
