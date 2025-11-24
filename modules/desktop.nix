@@ -7,7 +7,6 @@
   # GPU / OpenGL configuration (recommended for Intel GPUs)
   hardware.opengl = {
     enable = true;
-    driSupport = true;
     extraPackages = with pkgs; [ mesa ];
   };
 
