@@ -4,8 +4,8 @@
   # Display server and desktop environment
   services.xserver.enable = true;
 
-  # GPU / OpenGL configuration (recommended for Intel GPUs)
-  hardware.opengl = {
+  # GPU / Graphics configuration (recommended for Intel GPUs)
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [ mesa ];
   };

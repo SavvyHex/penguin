@@ -14,10 +14,10 @@
     gimp
     imagemagick
     ffmpeg
-    sdl2
-    sdl2_image
-    sdl2_mixer
-    sdl2_ttf
+    SDL2
+    SDL2_image
+    SDL2_mixer
+    SDL2_ttf
     assimp
     openal
     vulkan-loader
