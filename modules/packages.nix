@@ -25,8 +25,24 @@
     python3Packages.pygame
     spotify
     python3
+    steam
+    proton-ge-bin
+    proton-plugins
+    mangohud
+    goverlay
   ];
 
   # Programs that need special configuration
   programs.firefox.enable = true;
+  
+  # Steam configuration
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+  
+  # Enable 32-bit support (required for Steam games)
+  hardware.opengl.driSupport32Bit = true;
+  hardware.pulseaudio.support32Bit = true;
 }
