@@ -26,7 +26,6 @@
     spotify
     python3
     steam
-    proton-ge-bin
     mangohud
     goverlay
   ];
@@ -39,6 +38,9 @@
     enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
   };
   
   # Enable 32-bit support (required for Steam games)
