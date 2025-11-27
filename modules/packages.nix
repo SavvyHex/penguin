@@ -42,9 +42,7 @@
     libxext
     libx11
     libxkbcommon
-    libssl
     icu
-    libudev-zero
     xdotool
     wmctrl
     zenity
@@ -82,9 +80,7 @@
       pkgs.libxext
       pkgs.libx11
       pkgs.libxkbcommon
-      pkgs.libssl
       pkgs.icu
-      pkgs.libudev-zero
     ];
   };
 }
