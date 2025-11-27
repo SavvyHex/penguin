@@ -30,7 +30,7 @@
     goverlay
     
     # Unity Hub and Dependencies
-    unity3d
+    unityhub
     mono
     dotnet-sdk_8
     
