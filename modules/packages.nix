@@ -99,6 +99,22 @@ let
       elfutils
       lttng-ust
       numactl
+      
+      # File system and inotify support
+      inotify-tools
+      glibc
+      
+      # Additional missing deps
+      gsettings-desktop-schemas
+      glib-networking
+      libsoup
+      libsoup_3
+      
+      # More graphics deps
+      vulkan-headers
+      libdrm
+      libva
+      libvdpau
     ]);
     
     multiPkgs = pkgs: (with pkgs; [
@@ -118,9 +134,18 @@ let
       export LD_LIBRARY_PATH=/usr/lib:/usr/lib32:$LD_LIBRARY_PATH
       export PATH=/usr/bin:$PATH
       export XDG_DATA_DIRS=/usr/share:$XDG_DATA_DIRS
-      # Fix GLib errors
+      
+      # Fix GLib/DBus errors
       export GIO_MODULE_DIR="${pkgs.glib-networking}/lib/gio/modules"
       export GSETTINGS_SCHEMA_DIR="${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas"
+      export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
+      
+      # Unity-specific environment variables
+      export UNITY_NOGRAPHICS=0
+      export UNITY_MIXED_CALLSTACK=1
+      
+      # Disable sandboxing which can cause crashes
+      export UNITY_DISABLE_SANDBOXING=1
     '';
     
     meta = {
