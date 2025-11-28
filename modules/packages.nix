@@ -89,3 +89,4 @@
   
   # Additional system settings for Unity and gaming
   programs.dconf.enable = true;
+}
