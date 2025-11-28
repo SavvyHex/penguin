@@ -97,10 +97,4 @@
   
   # Additional system settings for Unity and gaming
   programs.dconf.enable = true;
-  
-  # OpenGL settings
-  hardware.opengl = {
-    driSupport = true;
-    driSupport32Bit = true;
-  };
 }
