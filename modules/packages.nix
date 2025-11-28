@@ -8,7 +8,7 @@
     brave
     vscode
     git
-    etcher
+    usbimager  # Alternative to Balena Etcher for writing disk images
     nodejs
     godot
     blender
