@@ -47,6 +47,30 @@
     wmctrl
     zenity
     
+    # Additional Unity dependencies (fixes crash)
+    pciutils          # provides lspci command
+    gtk3
+    glib
+    cairo
+    pango
+    atk
+    gdk-pixbuf
+    freetype
+    fontconfig
+    dbus
+    nspr
+    nss
+    cups
+    expat
+    udev
+    alsa-lib
+    libGL
+    libGLU
+    mesa
+    zlib
+    libpulseaudio
+    libcap
+    
     # Build tools
     gcc
     pkg-config
@@ -81,6 +105,33 @@
       pkgs.libx11
       pkgs.libxkbcommon
       pkgs.icu
+      pkgs.gtk3
+      pkgs.glib
+      pkgs.cairo
+      pkgs.pango
+      pkgs.atk
+      pkgs.gdk-pixbuf
+      pkgs.freetype
+      pkgs.fontconfig
+      pkgs.dbus
+      pkgs.nspr
+      pkgs.nss
+      pkgs.cups
+      pkgs.expat
+      pkgs.udev
+      pkgs.alsa-lib
+      pkgs.libGL
+      pkgs.libGLU
+      pkgs.mesa
+      pkgs.zlib
+      pkgs.libpulseaudio
+      pkgs.libcap
     ];
   };
+  
+  # Ensure DBus is available for Unity (fixes GLib-GIO-CRITICAL errors)
+  services.dbus.enable = true;
+  
+  # Additional system settings for Unity
+  programs.dconf.enable = true;
 }
