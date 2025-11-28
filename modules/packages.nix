@@ -1,5 +1,103 @@
 { config, pkgs, lib, ... }:
 
+let
+  # Create Unity with FHS environment wrapper
+  unityFHS = pkgs.buildFHSUserEnv {
+    name = "unity-fhs";
+    targetPkgs = pkgs: with pkgs; [
+      unityhub
+      # Core Unity dependencies
+      gtk3
+      gtk2
+      glib
+      cairo
+      pango
+      atk
+      gdk-pixbuf
+      freetype
+      fontconfig
+      dbus
+      nspr
+      nss
+      cups
+      expat
+      udev
+      alsa-lib
+      libGL
+      libGLU
+      mesa
+      zlib
+      libpulseaudio
+      libcap
+      libxkbcommon
+      
+      # X11 libraries
+      xorg.libX11
+      xorg.libXcursor
+      xorg.libXrandr
+      xorg.libXinerama
+      xorg.libXi
+      xorg.libXext
+      xorg.libXrender
+      xorg.libXfixes
+      xorg.libXcomposite
+      xorg.libXdamage
+      xorg.libxcb
+      xorg.libXScrnSaver
+      xorg.libSM
+      xorg.libICE
+      
+      # System utilities
+      pciutils
+      procps
+      coreutils
+      
+      # Development tools
+      mono
+      dotnet-sdk_8
+      gcc
+      stdenv.cc.cc.lib
+      
+      # Additional libraries
+      icu
+      openssl
+      krb5
+      libsecret
+      at-spi2-atk
+      at-spi2-core
+      libuuid
+      libappindicator
+      libnotify
+      
+      # Wayland support
+      wayland
+      
+      # Audio
+      pipewire
+      
+      # Utilities Unity uses
+      xdotool
+      wmctrl
+      zenity
+      gnome.zenity
+    ];
+    
+    multiPkgs = pkgs: with pkgs; [
+      # 32-bit support
+      alsa-lib
+      libpulseaudio
+    ];
+    
+    runScript = "unityhub";
+    
+    profile = ''
+      export UNITY_PATH=${pkgs.unityhub}
+      export LD_LIBRARY_PATH=/usr/lib:/usr/lib32:$LD_LIBRARY_PATH
+      export PATH=/usr/bin:$PATH
+      export XDG_DATA_DIRS=/usr/share:$XDG_DATA_DIRS
+    '';
+  };
+in
 {
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
@@ -29,52 +127,20 @@
     mangohud
     goverlay
     
-    # Unity Hub and Dependencies
-    unityhub
+    # Unity with FHS environment (replaces unityhub)
+    unityFHS
     mono
     dotnet-sdk_8
-    
-    # Required libraries for Unity
-    libxcursor
-    libxrandr
-    libxinerama
-    libxi
-    libxext
-    libx11
-    libxkbcommon
-    icu
-    xdotool
-    wmctrl
-    zenity
-    
-    # Additional Unity dependencies (fixes crash)
-    pciutils          # provides lspci command
-    gtk3
-    glib
-    cairo
-    pango
-    atk
-    gdk-pixbuf
-    freetype
-    fontconfig
-    dbus
-    nspr
-    nss
-    cups
-    expat
-    udev
-    alsa-lib
-    libGL
-    libGLU
-    mesa
-    zlib
-    libpulseaudio
-    libcap
     
     # Build tools
     gcc
     pkg-config
     cmake
+    
+    # System utilities
+    pciutils
+    xdotool
+    wmctrl
   ];
 
   # Programs that need special configuration
@@ -94,42 +160,7 @@
   hardware.graphics.enable32Bit = true;
   services.pulseaudio.support32Bit = true;
   
-  # Environment variables for Unity
-  environment.variables = {
-    LD_LIBRARY_PATH = lib.makeLibraryPath [
-      pkgs.libxcursor
-      pkgs.libxrandr
-      pkgs.libxinerama
-      pkgs.libxi
-      pkgs.libxext
-      pkgs.libx11
-      pkgs.libxkbcommon
-      pkgs.icu
-      pkgs.gtk3
-      pkgs.glib
-      pkgs.cairo
-      pkgs.pango
-      pkgs.atk
-      pkgs.gdk-pixbuf
-      pkgs.freetype
-      pkgs.fontconfig
-      pkgs.dbus
-      pkgs.nspr
-      pkgs.nss
-      pkgs.cups
-      pkgs.expat
-      pkgs.udev
-      pkgs.alsa-lib
-      pkgs.libGL
-      pkgs.libGLU
-      pkgs.mesa
-      pkgs.zlib
-      pkgs.libpulseaudio
-      pkgs.libcap
-    ];
-  };
-  
-  # Ensure DBus is available for Unity (fixes GLib-GIO-CRITICAL errors)
+  # Ensure DBus is available for Unity
   services.dbus.enable = true;
   
   # Additional system settings for Unity
