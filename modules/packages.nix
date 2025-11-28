@@ -8,6 +8,7 @@
     brave
     vscode
     git
+    etcher
     nodejs
     godot
     blender
@@ -88,4 +89,3 @@
   
   # Additional system settings for Unity and gaming
   programs.dconf.enable = true;
-}
