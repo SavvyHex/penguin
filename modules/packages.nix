@@ -1,5 +1,133 @@
 { config, pkgs, lib, ... }:
 
+let
+  # Custom Unity Hub with proper FHS environment
+  unity-hub-fhs = pkgs.buildFHSEnv {
+    name = "unity-hub";
+    
+    targetPkgs = pkgs: (with pkgs; [
+      # Unity Hub itself
+      unityhub
+      
+      # Core system libraries
+      glibc
+      gcc-unwrapped
+      
+      # GTK and GUI libraries
+      gtk3
+      gtk2
+      glib
+      cairo
+      pango
+      atk
+      gdk-pixbuf
+      
+      # X11 and graphics
+      xorg.libX11
+      xorg.libXcursor
+      xorg.libXrandr
+      xorg.libXinerama
+      xorg.libXi
+      xorg.libXext
+      xorg.libXrender
+      xorg.libXfixes
+      xorg.libXcomposite
+      xorg.libXdamage
+      xorg.libxcb
+      xorg.libXScrnSaver
+      xorg.libSM
+      xorg.libICE
+      libxkbcommon
+      
+      # OpenGL
+      libGL
+      libGLU
+      mesa
+      
+      # Audio
+      alsa-lib
+      libpulseaudio
+      pipewire
+      
+      # Fonts and text rendering
+      freetype
+      fontconfig
+      harfbuzz
+      
+      # System
+      dbus
+      systemd
+      udev
+      
+      # Networking and security
+      nspr
+      nss
+      openssl
+      
+      # Other dependencies
+      cups
+      expat
+      zlib
+      libcap
+      icu
+      krb5
+      libsecret
+      at-spi2-atk
+      at-spi2-core
+      libuuid
+      libappindicator
+      libnotify
+      
+      # Development
+      mono
+      dotnet-sdk_8
+      
+      # Wayland
+      wayland
+      
+      # Utilities
+      pciutils
+      procps
+      coreutils
+      xdotool
+      wmctrl
+      zenity
+      
+      # Additional deps that Unity Editor might need
+      stdenv.cc.cc.lib
+      libunwind
+      elfutils
+      lttng-ust
+      numactl
+    ]);
+    
+    multiPkgs = pkgs: (with pkgs; [
+      # 32-bit libraries for Unity
+      alsa-lib
+      libpulseaudio
+      libGL
+      libGLU
+      mesa
+      zlib
+      stdenv.cc.cc.lib
+    ]);
+    
+    runScript = "unityhub";
+    
+    profile = ''
+      export LD_LIBRARY_PATH=/usr/lib:/usr/lib32:$LD_LIBRARY_PATH
+      export PATH=/usr/bin:$PATH
+      export XDG_DATA_DIRS=/usr/share:$XDG_DATA_DIRS
+      # Fix GLib errors
+      export GIO_MODULE_DIR="${pkgs.glib-networking}/lib/gio/modules"
+      export GSETTINGS_SCHEMA_DIR="${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas"
+    '';
+    
+    meta = {
+      description = "Unity Hub with FHS environment";
+    };
+  };
+in
 {
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
@@ -32,19 +160,11 @@
     goverlay
     gamemode
     
-    # Unity (run with: steam-run unityhub)
-    unityhub
-    mono
-    dotnet-sdk_8
+    # Unity Hub with FHS wrapper
+    unity-hub-fhs
     
-    # Additional Unity dependencies for steam-run
-    gtk3
-    gtk2
-    glib
-    pciutils
-    xdotool
-    wmctrl
-    zenity
+    # Still include steam-run as fallback
+    steam-run
     
     # Build tools
     gcc
