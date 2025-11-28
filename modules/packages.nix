@@ -107,7 +107,7 @@ let
       # Additional missing deps
       gsettings-desktop-schemas
       glib-networking
-      libsoup
+      libsoup_2_4
       libsoup_3
       
       # More graphics deps
